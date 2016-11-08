@@ -1,6 +1,6 @@
 {
   "name": "stompjs",
-  "version": "2.3.4-next",
+  "version": "3.0.1",
   "author": "Jeff Mesnil <jmesnil@gmail.com>",
   "description": "STOMP for JavaScript apps (Web browser & node.js)",
   "scripts": {
