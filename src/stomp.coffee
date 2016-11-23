@@ -139,6 +139,11 @@ class Client
       # expect to receive server heartbeat at least every 10s by default
       # (value in ms)
       incoming: 10000
+      # multiplier to be tolerant for late heartbeats. The effective 
+      # heartbeat interval will be incoming * gracePeriodMultiplier
+      # The default is 2 to be flexible on window's setInterval calls
+      gracePeriodMultiplier: 2
+    
     }
     # maximum *WebSocket* frame size sent by the client. If the STOMP frame
     # is bigger than this value, the STOMP frame will be sent using multiple
@@ -205,8 +210,7 @@ class Client
       @debug? "check PONG every #{ttl}ms"
       @ponger = Stomp.setInterval ttl, =>
         delta = now() - @serverActivity
-        # We wait twice the TTL to be flexible on window's setInterval calls
-        if delta > ttl * 2
+        if delta > ttl * @heartbeat.gracePeriodMultiplier
           @debug? "did not receive server activity for the last #{delta}ms"
           @ws.close()
 

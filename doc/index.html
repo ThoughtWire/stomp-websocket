@@ -304,12 +304,15 @@ This method expects an object that conforms to the WebSocket definition.
 
 <p>If the STOMP broker accepts STOMP 1.1 frames, <a href=>heart-beating</a> is enabled by default.
 
-<p>The <code>client</code> object has a <code>heartbeat</code> field which can be used to configure heart-beating by changing its <code>incoming</code> and <code>outgoing</code> integer fields (default value for both is <code>10000</code>ms):
+<p>The <code>client</code> object has a <code>heartbeat</code> field which can be used to configure heart-beating by changing its <code>incoming</code>, <code>outgoing</code> and <code>gracePeriodMultiplier</code> integer fields (default value are: incoming = outgoing = <code>10000</code>ms, gracePeriodMtuliplier = <code>2</code>).:
 
 <pre><code>
-    client.<mark>heartbeat.outgoing</mark> = 20000; // client will send heartbeats every 20000ms
-    client.<mark>heartbeat.incoming</mark> = 0;     // client does not want to receive heartbeats
-                                       // from the server
+    client.<mark>heartbeat.outgoing</mark> = 20000;          // client will send heartbeats every 20000ms
+    client.<mark>heartbeat.incoming</mark> = 0;              // client does not want to receive heartbeats
+                                                // from the server
+    cliean.<mark>heartbeat.gracePeriodMultiplier</mark> = 2; // client will tolerate late heartbeats from the server.
+                                                // The effeltive heartbeat will be 
+                                                // heartbeat.incoming * heartbeat.gracePeriodMultiplier            
 </code></pre>
 
 <p>The heart-beating is using <code>window.setInterval()</code> to regularly send heart-beats and/or check server heart-beats.
