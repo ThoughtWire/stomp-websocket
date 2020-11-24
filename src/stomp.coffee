@@ -9,6 +9,7 @@
 #
 # * [STOMP 1.0](http://stomp.github.com/stomp-specification-1.0.html)
 # * [STOMP 1.1](http://stomp.github.com/stomp-specification-1.1.html)
+# * [STOMP 1.2](http://stomp.github.io/stomp-specification-1.2.html)
 #
 # The library is accessed through the `Stomp` object that is set on the `window`
 # when running in a Web browser.
@@ -208,6 +209,8 @@ class Client
         # We wait twice the TTL to be flexible on window's setInterval calls
         if delta > ttl * 2
           @debug? "did not receive server activity for the last #{delta}ms"
+          @ws.onClose()
+          @ws.onClose = null
           @ws.close()
 
   # parse the arguments number and type to find the headers, connectCallback and
