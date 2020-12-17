@@ -209,8 +209,8 @@ class Client
         # We wait twice the TTL to be flexible on window's setInterval calls
         if delta > ttl * 2
           @debug? "did not receive server activity for the last #{delta}ms"
-          @ws.onClose()
-          @ws.onClose = null
+          @ws.onclose()
+          @ws.onclose = null
           @ws.close()
 
   # parse the arguments number and type to find the headers, connectCallback and
